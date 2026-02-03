@@ -9,6 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     /// Zstack is used to cover full vertical and horizontal layout
+    /// The primary view hierarchy for the weather screen.
+    ///
+    /// This view composes a layered interface using:
+    /// - A ZStack with a full-screen linear gradient background spanning from black to red.
+    /// - A VStack containing:
+    ///   - Location title, current temperature, condition summary, and high/low indicators.
+    ///   - A card-like section with a brief forecast summary and an hourly forecast strip,
+    ///     including a highlighted "Now" item and subsequent hourly entries.
+    ///   - A prominent "Learn More" button at the bottom with styled appearance.
+    ///
+    /// Layout and styling notes:
+    /// - Uses `.edgesIgnoringSafeArea(.all)` to allow the gradient to extend under safe areas.
+    /// - Employs typographic hierarchy via `.font` and `.foregroundColor(.white)` for readability on the dark gradient.
+    /// - Card sections use semi-transparent backgrounds, rounded corners, strokes, and subtle shadows
+    ///   to create visual separation while maintaining the layered aesthetic.
+    /// - Spacing and padding are tuned to balance density and legibility across the vertical stack.
+    ///
+    /// Accessibility and system integration:
+    /// - System SF Symbols (e.g., `moon.fill`, `cloud.fill`) are used for weather icons,
+    ///   inheriting the configured font size and foreground color for consistency.
+    /// - Button provides a clear call to action; currently logs to console and can be wired to navigation or detail content.
+    ///
+    /// - Returns: A view describing the complete content for the weather screen.
     var body: some View {
         ZStack{
             LinearGradient(gradient: Gradient(colors: [.black, .blue, .cyan, .red]),
@@ -21,25 +44,32 @@ struct ContentView: View {
                                   weight: .medium,
                                   design: .default))
                     .foregroundColor(.white)
-                    .padding(.bottom,10)
+                    .padding(.top,10)
+                Spacer()
+                Image(systemName:"cloud.fill")
+                    .renderingMode(.original)
+                    .font(Font.system(size: 100, weight: .thin, design: .default))
 
-                Text("40˚")
-                    .font(.system(size: 84,
+                Text("49˚")
+                    .font(.system(size: 80,
                                   weight: .light,
                                   design: .default))
                     .foregroundColor(.white)
-                Text("Clear")
+                
+                Text("Mostly Cloudy")
                     .font(.system(size: 32,
                                   weight: .light,
                                   design: .default))
                     .foregroundColor(.white)
+                
                 HStack{
-                    Text("H:53˚")
+                    Text("H:60˚")
                         .font(.system(size: 22,
                                       weight: .medium,
                                       design: .default))
                         .foregroundColor(.white)
-                    Text("L:20˚")
+                    
+                    Text("L:31˚")
                         .font(.system(size: 22,
                                       weight: .medium,
                                       design: .default))
@@ -62,124 +92,39 @@ struct ContentView: View {
                         .fill(Color.white.opacity(0.3))
                         .frame(height: 1)
                         .padding(.horizontal, 32)
-                    HStack(spacing:10){
-                        
-                        VStack (spacing: 10){
-                            Text("Now")
-                                .font(.system(size: 18,
-                                              weight: .bold,
-                                              design:.default))
-                                .foregroundColor(.white)
-                                .padding(10)
-                            Image(systemName: "moon.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("40˚")
-                                .font(.system(size: 18,
-                                              weight: .bold,
-                                              design: .default))
-                                .foregroundColor(.white)
-                                .padding(10)
-                        }
-                        .background(Color.white.opacity(0.4))
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.white.opacity(0.4), lineWidth: 2)
+                    
+                    HStack(spacing:20){
+                        WeatherView (
+                            timeOfDay: "Now",
+                            imageName: "cloud.fill",
+                            temperature: "49˚"
                         )
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 4)
+                        WeatherView (
+                            timeOfDay: "11",
+                            imageName: "cloud.fill",
+                            temperature: "52˚"
+                        )
+                        WeatherView (
+                            timeOfDay: "12",
+                            imageName: "cloud.sun.fill",
+                            temperature: "56˚"
+                        )
+                        WeatherView (
+                            timeOfDay: "1",
+                            imageName: "cloud.fill",
+                            temperature: "59˚"
+                        )
+                        WeatherView (
+                            timeOfDay: "2",
+                            imageName: "cloud.fill",
+                            temperature: "60˚"
+                        )
+                        WeatherView (
+                            timeOfDay: "3",
+                            imageName: "cloud.fill",
+                            temperature: "59˚"
+                        )
                         
-                        VStack (spacing: 10){
-                            Text("20")
-                                .font(.system(size: 18,
-                                              weight: .medium,
-                                              design:.default))
-                                .foregroundColor(.white)
-                            Image(systemName: "moon.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("39˚")
-                                .font(.system(size: 18,
-                                              weight: .light,
-                                              design: .default))
-                                .foregroundColor(.white)
-                        }
-                        VStack (spacing: 10){
-                            Text("21")
-                                .font(.system(size: 18,
-                                              weight: .medium,
-                                              design:.default))
-                                .foregroundColor(.white)
-                            Image(systemName: "moon.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("38˚")
-                                .font(.system(size: 18,
-                                              weight: .light,
-                                              design: .default))
-                                .foregroundColor(.white)
-                        }
-                        VStack (spacing: 10){
-                            Text("22")
-                                .font(.system(size: 18,
-                                              weight: .medium,
-                                              design:.default))
-                                .foregroundColor(.white)
-                            Image(systemName: "moon.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("37˚")
-                                .font(.system(size: 18,
-                                              weight: .light,
-                                              design: .default))
-                                .foregroundColor(.white)
-                        }
-                        VStack (spacing: 10){
-                            Text("23")
-                                .font(.system(size: 18,
-                                              weight: .medium,
-                                              design:.default))
-                                .foregroundColor(.white)
-                            Image(systemName: "moon.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("36˚")
-                                .font(.system(size: 18,
-                                              weight: .light,
-                                              design: .default))
-                                .foregroundColor(.white)
-                        }
-                        VStack (spacing: 10){
-                            Text("00")
-                                .font(.system(size: 18,
-                                              weight: .medium,
-                                              design:.default))
-                                .foregroundColor(.white)
-                            Image(systemName: "cloud.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("35˚")
-                                .font(.system(size: 18,
-                                              weight: .light,
-                                              design: .default))
-                                .foregroundColor(.white)
-                        }
-                        VStack (spacing: 10){
-                            Text("01")
-                                .font(.system(size: 18,
-                                              weight: .medium,
-                                              design:.default))
-                                .foregroundColor(.white)
-                            Image(systemName: "cloud.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white)
-                            Text("35˚")
-                                .font(.system(size: 18,
-                                              weight: .light,
-                                              design: .default))
-                                .foregroundColor(.white)
-                        }
                         .padding(.vertical,20)
                     }
                 }
@@ -190,7 +135,6 @@ struct ContentView: View {
                         .stroke(Color.white.opacity(0.4), lineWidth: 2)
                 )
                 .padding(20)
-                
                 
                 
                 VStack (spacing: 20){
@@ -224,4 +168,34 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+struct WeatherView: View {
+    var timeOfDay: String
+    var imageName: String
+    var temperature: String
+    
+    var body: some View {
+        VStack (spacing: 10){
+            Text(timeOfDay)
+                .font(.system(size: 18,
+                              weight: .bold,
+                              design:.default))
+                .foregroundColor(.white)
+                .padding(4)
+            
+            Image(systemName: imageName)
+                .renderingMode(.original)
+                .font(.system(size: 18))
+                .foregroundColor(.white)
+                .frame(width: 18, height: 18)
+            
+            Text(temperature)
+                .font(.system(size: 18,
+                              weight: .bold,
+                              design: .default))
+                .foregroundColor(.white)
+
+        }
+    }
 }
