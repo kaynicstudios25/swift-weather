@@ -11,7 +11,7 @@ struct ContentView: View {
     /// Zstack is used to cover full vertical and horizontal layout
     var body: some View {
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [.black, .blue, .orange, .white]),
+            LinearGradient(gradient: Gradient(colors: [.black, .blue, .cyan, .red]),
                            startPoint: .topLeading,
                            endPoint: .bottomLeading)
                 .edgesIgnoringSafeArea(.all)
@@ -21,6 +21,8 @@ struct ContentView: View {
                                   weight: .medium,
                                   design: .default))
                     .foregroundColor(.white)
+                    .padding(.bottom,10)
+
                 Text("40˚")
                     .font(.system(size: 84,
                                   weight: .light,
@@ -43,19 +45,24 @@ struct ContentView: View {
                                       design: .default))
                         .foregroundColor(.white)
                 }
-
-                VStack (spacing: 10){
-                    
-                    Text("Clear conditions will continue for the rest of the day. Winds gust are up to 8mph")
-                        .font(.system(size: 18,
-                                      weight: .regular,
-                                      design: .default))
-                        .foregroundColor(.white)
+                
+                .padding(.bottom,30)
+                
+                VStack{
+                    VStack (spacing: 10){
+                        Text("Clear conditions will continue for the rest of the day. Winds gust are up to 8mph.")
+                            .font(.system(size: 16,
+                                          weight: .regular,
+                                          design: .default))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 32)
+                            .padding(.vertical, 12)
+                    }
+                    Rectangle()
+                        .fill(Color.white.opacity(0.3))
+                        .frame(height: 1)
                         .padding(.horizontal, 32)
-                        .padding(.vertical, 12)
-                        .cornerRadius(12)
-                    
-                    HStack(spacing:20){
+                    HStack(spacing:10){
                         
                         VStack (spacing: 10){
                             Text("Now")
@@ -63,15 +70,26 @@ struct ContentView: View {
                                               weight: .bold,
                                               design:.default))
                                 .foregroundColor(.white)
+                                .padding(10)
                             Image(systemName: "moon.fill")
                                 .font(.system(size: 18))
                                 .foregroundColor(.white)
                             Text("40˚")
                                 .font(.system(size: 18,
-                                              weight: .light,
+                                              weight: .bold,
                                               design: .default))
                                 .foregroundColor(.white)
+                                .padding(10)
                         }
+                        .background(Color.white.opacity(0.4))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.white.opacity(0.4), lineWidth: 2)
+                        )
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 4)
+                        
                         VStack (spacing: 10){
                             Text("20")
                                 .font(.system(size: 18,
@@ -162,14 +180,24 @@ struct ContentView: View {
                                               design: .default))
                                 .foregroundColor(.white)
                         }
+                        .padding(.vertical,20)
                     }
                 }
+                .background(Color.white.opacity(0.1))
+                .cornerRadius(12)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.white.opacity(0.4), lineWidth: 2)
+                )
+                .padding(20)
+                
+                
                 
                 VStack (spacing: 20){
                     Button(action: {
                         print("Hello, World!")
                     }) {
-                        Text("More")
+                        Text("Learn More")
                             .font(.system(size: 24,
                                           weight: .bold,
                                           design:.default))
@@ -179,8 +207,13 @@ struct ContentView: View {
                             .background(Color.white.opacity(0.2))
                             .cornerRadius(12)
                             .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 0)
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.white.opacity(0.4), lineWidth: 2)
+                            )
                     }
                 }
+                .padding(.top, 40)
                 
             }
             
