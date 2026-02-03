@@ -34,60 +34,50 @@ struct ContentView: View {
     /// - Returns: A view describing the complete content for the weather screen.
     var body: some View {
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [.black, .blue, .cyan, .red]),
+            LinearGradient(gradient: Gradient(colors: [.indigo,.cyan, .teal]),
                            startPoint: .topLeading,
                            endPoint: .bottomLeading)
                 .edgesIgnoringSafeArea(.all)
             VStack{
-                Text("Trussville, AL")
-                    .font(.system(size: 32,
-                                  weight: .medium,
-                                  design: .default))
-                    .foregroundColor(.white)
-                    .padding(.top,10)
+                TextView(text: "Trussville, AL",
+                         fontSize: 32,
+                         fontWeight: .medium)
+                .padding(.top, 40)
                 Spacer()
                 Image(systemName:"cloud.fill")
                     .renderingMode(.original)
-                    .font(Font.system(size: 100, weight: .thin, design: .default))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 100)
 
-                Text("49˚")
-                    .font(.system(size: 80,
-                                  weight: .light,
-                                  design: .default))
-                    .foregroundColor(.white)
+                TextView(text: "49˚",
+                         fontSize: 80,
+                         fontWeight: .light)
                 
-                Text("Mostly Cloudy")
-                    .font(.system(size: 32,
-                                  weight: .light,
-                                  design: .default))
-                    .foregroundColor(.white)
+                TextView(text: "Mostly Cloudy",
+                         fontSize: 32,
+                         fontWeight: .light)
+                
                 
                 HStack{
-                    Text("H:60˚")
-                        .font(.system(size: 22,
-                                      weight: .medium,
-                                      design: .default))
-                        .foregroundColor(.white)
+                    TextView(text: "H:60˚",
+                             fontSize: 22,
+                             fontWeight: .medium)
                     
-                    Text("L:31˚")
-                        .font(.system(size: 22,
-                                      weight: .medium,
-                                      design: .default))
-                        .foregroundColor(.white)
+                    TextView(text: "L:31˚",
+                             fontSize: 22,
+                             fontWeight: .medium)
                 }
-                
                 .padding(.bottom,30)
                 
                 VStack{
                     VStack (spacing: 10){
-                        Text("Clear conditions will continue for the rest of the day. Winds gust are up to 8mph.")
-                            .font(.system(size: 16,
-                                          weight: .regular,
-                                          design: .default))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 32)
-                            .padding(.vertical, 12)
+                        TextView(text: "Rainy conditions expected around 4PM. Wind gusts are up to 16mph",
+                                 fontSize: 16,
+                                 fontWeight: .regular)
                     }
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 12)
                     Rectangle()
                         .fill(Color.white.opacity(0.3))
                         .frame(height: 1)
@@ -135,22 +125,19 @@ struct ContentView: View {
                         .stroke(Color.white.opacity(0.4), lineWidth: 2)
                 )
                 .padding(20)
-                
+                Spacer()
                 
                 VStack (spacing: 20){
                     Button(action: {
                         print("Hello, World!")
                     }) {
-                        Text("Learn More")
-                            .font(.system(size: 24,
-                                          weight: .bold,
-                                          design:.default))
-                            .foregroundColor(.white)
+                        TextView(text: "Learn More",
+                                 fontSize: 24,
+                                 fontWeight: .bold)
                             .padding(.horizontal, 32)
                             .padding(.vertical, 12)
                             .background(Color.white.opacity(0.2))
                             .cornerRadius(12)
-                            .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 0)
                             .overlay(
                                     RoundedRectangle(cornerRadius: 12)
                                     .stroke(Color.white.opacity(0.4), lineWidth: 2)
@@ -160,8 +147,6 @@ struct ContentView: View {
                 .padding(.top, 40)
                 
             }
-            
-            
         }
     }
 }
@@ -186,9 +171,8 @@ struct WeatherView: View {
             
             Image(systemName: imageName)
                 .renderingMode(.original)
-                .font(.system(size: 18))
                 .foregroundColor(.white)
-                .frame(width: 18, height: 18)
+                .frame(width: 20, height: 20)
             
             Text(temperature)
                 .font(.system(size: 18,
@@ -196,6 +180,22 @@ struct WeatherView: View {
                               design: .default))
                 .foregroundColor(.white)
 
+        }
+    }
+}
+struct TextView: View {
+    
+    var text: String
+    var fontSize: CGFloat
+    var fontWeight: Font.Weight
+    
+    var body: some View {
+        VStack{
+            Text(text)
+                .font(.system(size: fontSize,
+                              weight: fontWeight,
+                              design: .default))
+                .foregroundColor(.white)
         }
     }
 }
